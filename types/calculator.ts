@@ -1,0 +1,51 @@
+export interface CurrentCosts {
+  emailSequencerCost: number;
+  emailSequencerName: string;
+  dailyEmailVolume: number;
+  numberOfDomains: number;
+  domainCostPerMonth: number;
+  totalMonthlyCost: number; // This is the inbox/infrastructure cost
+}
+
+export interface OurOffer {
+  emailSequencerCost: number;
+  desiredDailyVolume: number;
+  costPerDomain: number;
+  useExistingDomains: boolean;
+  costForDomains: number;
+}
+
+export interface CalculationResults {
+  // Current costs breakdown (matching spreadsheet)
+  currentSequencerCost: number;
+  currentDomainCost: number;
+  currentTotalRecurring: number; // sequencer + totalMonthlyCost
+  currentTotalWithDomains: number; // totalRecurring + domainCost
+  
+  // Our offer breakdown
+  ourSequencerCost: number;
+  ourDomainCost: number;
+  ourTotalCost: number;
+  
+  // Savings calculations (matching spreadsheet exactly)
+  sequencerSavings: number;
+  sequencerAnnualSavings: number;
+  emailInboxSavings: number; // totalMonthlyCost - ourSequencerCost
+  emailInboxAnnualSavings: number;
+  emailInboxSavingsPercentage: number;
+  domainSavings: number;
+  domainAnnualSavings: number;
+  
+  // Totals
+  totalSavings: number;
+  totalSavingsPercentage: number;
+  annualSavings: number;
+  
+  // Additional metrics
+  domainsNeeded: number;
+}
+
+export interface CalculatorFormData {
+  currentCosts: CurrentCosts;
+  ourOffer: OurOffer;
+} 
