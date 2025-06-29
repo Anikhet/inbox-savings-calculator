@@ -3,8 +3,9 @@ export interface CurrentCosts {
   emailSequencerName: string;
   dailyEmailVolume: number;
   numberOfDomains: number;
-  domainCostPerMonth: number;
+
   totalMonthlyCost: number; // This is the inbox/infrastructure cost
+  domainCost : number
 }
 
 export interface OurOffer {

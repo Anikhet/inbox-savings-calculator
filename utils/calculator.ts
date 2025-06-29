@@ -1,7 +1,7 @@
 import { CurrentCosts, OurOffer, CalculationResults } from '@/types/calculator';
 
 // Constants from the spreadsheet
-const DOMAIN_COST_PER_MONTH = 11.99; // $11.99 per domain
+// $11.99 per domain
 const EMAILS_PER_DOMAIN = 500; // Our infrastructure can send 500 sends/domain
 const MONTHS_PER_YEAR = 12;
 
@@ -11,7 +11,7 @@ export function calculateSavings(
 ): CalculationResults {
   // Current costs breakdown (matching spreadsheet exactly)
   const currentSequencerCost = currentCosts.emailSequencerCost;
-  const currentDomainCost = currentCosts.numberOfDomains * DOMAIN_COST_PER_MONTH;
+  const currentDomainCost = currentCosts.numberOfDomains * currentCosts.domainCost;
   const currentTotalRecurring = currentSequencerCost + currentCosts.totalMonthlyCost; // sequencer + inbox cost
   const currentTotalWithDomains = currentTotalRecurring + currentDomainCost; // total recurring + domains
 
