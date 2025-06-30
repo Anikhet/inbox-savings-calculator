@@ -445,12 +445,7 @@ export default function InboxCalculator() {
                           <span className="text-sm font-medium text-gray-700">Your Domain Costs</span>
                           <span className="font-semibold text-green-600">{formatCurrency(watch('ourOffer.costForDomains')*(watch('ourOffer.desiredDailyVolume')/500))}</span>
                         </div>
-                        {/* {!useExistingDomains && (
-                          <div className="flex justify-between items-center p-3 bg-green-50 rounded-lg border border-green-200">
-                            <span className="text-sm font-medium text-gray-700">Domain Purchase</span>
-                            <span className="font-semibold text-green-600">{formatCurrency(results.domainsNeeded * watch('ourOffer.costForDomains'))}</span>
-                          </div>
-                        )} */}
+                     
                       </div>
                     </div>
                   </div>
@@ -468,41 +463,23 @@ export default function InboxCalculator() {
                       
                       </div>
                 
-                <PulsatingButton className='bg-emerald-500' pulseColor='' >
-                   Start Saving
+              <PulsatingButton
+  onClick={() => {
+    window.location.href =
+      'https://cal.com/conrad-niedzielski/inboxes-chat'
+  }}
+  className="bg-emerald-500"
+  pulseColor=""
+>
+  Start Saving
+</PulsatingButton>
 
-                </PulsatingButton>
                     </div>
                   </div>
                 </CardContent>
               </Card>
 
-              {/* Call to Action */}
-              {/* <Card className="bg-gradient-to-br from-blue-600 via-blue-700 to-indigo-800 border-0 shadow-2xl overflow-hidden">
-                <div className="relative">
-                  <div className="absolute inset-0 bg-black/20"></div>
-                  <div className="absolute top-0 right-0 w-32 h-32 sm:w-40 sm:h-40 bg-white/10 rounded-full -translate-y-16 sm:-translate-y-20 translate-x-16 sm:translate-x-20"></div>
-                  <div className="absolute bottom-0 left-0 w-24 h-24 sm:w-32 sm:h-32 bg-white/10 rounded-full translate-y-12 sm:translate-y-16 -translate-x-12 sm:-translate-x-16"></div>
-                  
-                  <CardHeader className="text-center relative z-10">
-                    <CardTitle className="text-2xl sm:text-3xl font-bold text-white mb-4">
-                      Ready to start saving money?
-                    </CardTitle>
-                    <CardDescription className="text-lg sm:text-xl text-white/90 mb-6">
-                      Switch to our infrastructure and save <span className="font-bold text-white">{formatCurrency(results.totalSavings)}</span> every month!
-                    </CardDescription>
-                  </CardHeader>
-                  <CardContent className="relative z-10 text-center">
-                    <div className="bg-white/20 backdrop-blur-sm rounded-2xl p-4 sm:p-6 inline-block">
-                      <div className="text-white/80 text-base sm:text-lg mb-2">That's</div>
-                      <div className="text-3xl sm:text-4xl font-bold text-white mb-2">
-                        {formatCurrency(results.annualSavings)}
-                      </div>
-                      <div className="text-white/70 text-sm sm:text-base">in your pocket every year!</div>
-                    </div>
-                  </CardContent>
-                </div>
-              </Card> */}
+              
             </div>
           )}
         </div>
