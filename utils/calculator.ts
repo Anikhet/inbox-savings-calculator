@@ -47,6 +47,7 @@ export function calculateSavings(
     : 0;
   const annualSavings = sequencerAnnualSavings + emailInboxAnnualSavings + domainSavings
 
+const yourDomainCosts = ourOffer.costForDomains* (ourOffer.desiredDailyVolume/500)
 
   return {
     // Current costs breakdown
@@ -74,8 +75,11 @@ export function calculateSavings(
     totalSavingsPercentage,
     annualSavings,
     
+
     // Additional metrics
     domainsNeeded,
+
+    yourDomainCosts
   };
 }
 

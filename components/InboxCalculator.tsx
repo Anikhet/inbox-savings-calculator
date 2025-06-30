@@ -15,6 +15,7 @@ import { Badge } from "@/components/ui/badge";
 import { Separator } from "@/components/ui/separator";
 import { Calculator, DollarSign, TrendingUp, Settings, BarChart3 } from "lucide-react";
 import { cn } from "@/lib/utils";
+import { PulsatingButton } from './magicui/pulsating-button';
 
 export default function InboxCalculator() {
   const [results, setResults] = useState<CalculationResults | null>(null);
@@ -61,6 +62,10 @@ export default function InboxCalculator() {
     setResults(calculatedResults);
   };
 
+
+
+  
+
   return (
     <div className="min-h-screen bg-background">
       {/* Header */}
@@ -70,7 +75,7 @@ export default function InboxCalculator() {
             <div>
               <h1 className="text-xl sm:text-2xl font-semibold">Inbox Cost Savings Calculator</h1>
               <p className="text-muted-foreground text-sm sm:text-base">
-                Calculate your email infrastructure cost savings with our exclusive reseller agreements
+                Calculate email infrastructure cost savings 
               </p>
             </div>
             {results && (
@@ -106,13 +111,13 @@ export default function InboxCalculator() {
                 <CardHeader className="bg-gradient-to-br from-blue-50 to-indigo-50 border-b border-blue-200">
                   <CardTitle className="flex items-center gap-2 text-blue-800">
                     <DollarSign className="h-5 w-5" />
-                    Current Costs
+                    Enter Your Current Costs
                   </CardTitle>
                   <CardDescription className="text-blue-600">Enter your current email infrastructure costs</CardDescription>
                 </CardHeader>
                 <CardContent className="space-y-4 pt-6">
                   <div>
-                    <Label htmlFor="currentCosts.emailSequencerCost" className="text-sm font-medium text-gray-700">Email Sequencer Cost (per month)</Label>
+                    <Label htmlFor="currentCosts.emailSequencerCost" className="text-sm font-medium text-gray-700">Email sequencer cost (per month)</Label>
                     <Input
                       id="currentCosts.emailSequencerCost"
                       type="number"
@@ -173,7 +178,7 @@ export default function InboxCalculator() {
                     )}
                   </div>
                   <div>
-                    <Label htmlFor="currentCosts.totalMonthlyCost" className="text-sm font-medium text-gray-700">How much do you currently pay per month?</Label>
+                    <Label htmlFor="currentCosts.totalMonthlyCost" className="text-sm font-medium text-gray-700">Current cost of inboxes per month?</Label>
                     <Input
                       id="currentCosts.totalMonthlyCost"
                       type="number"
@@ -198,11 +203,11 @@ export default function InboxCalculator() {
                     <Settings className="h-5 w-5" />
                     Our Offer
                   </CardTitle>
-                  <CardDescription className="text-green-600">Configure your custom offer and see the savings</CardDescription>
+                  <CardDescription className="text-green-600">Configure our custom offer and see the savings</CardDescription>
                 </CardHeader>
                 <CardContent className="space-y-4 pt-6">
                   <div>
-                    <Label htmlFor="ourOffer.emailSequencerCost" className="text-sm font-medium text-gray-700">Email Sequencer</Label>
+                    <Label htmlFor="ourOffer.emailSequencerCost" className="text-sm font-medium text-gray-700">Email sequencer</Label>
                     <Input
                       id="ourOffer.emailSequencerCost"
                       type="number"
@@ -218,7 +223,7 @@ export default function InboxCalculator() {
                     )}
                   </div>
                   <div>
-                    <Label htmlFor="ourOffer.desiredDailyVolume" className="text-sm font-medium text-gray-700">Desired Daily Volume</Label>
+                    <Label htmlFor="ourOffer.desiredDailyVolume" className="text-sm font-medium text-gray-700">Desired daily volume</Label>
                     <Input
                       id="ourOffer.desiredDailyVolume"
                       type="number"
@@ -233,7 +238,7 @@ export default function InboxCalculator() {
                     )}
                   </div>
                   <div>
-                    <Label htmlFor="domainsNeeded" className="text-sm font-medium text-gray-700">Number of Domains Needed</Label>
+                    <Label htmlFor="domainsNeeded" className="text-sm font-medium text-gray-700">Number of domains needed</Label>
                     <div className="flex items-center gap-2 mt-1">
                       <Input
                         id="domainsNeeded"
@@ -248,7 +253,7 @@ export default function InboxCalculator() {
                     </div>
                   </div>
                   <div>
-                    <Label htmlFor="ourOffer.costPerDomain" className="text-sm font-medium text-gray-700">Cost for 500 email sends (1 domain)</Label>
+                    <Label htmlFor="ourOffer.costPerDomain" className="text-sm font-medium text-gray-700">Our cost for inboxes per domain</Label>
                     <Input
                       id="ourOffer.costPerDomain"
                       type="number"
@@ -284,7 +289,11 @@ export default function InboxCalculator() {
                     <Switch
                       id="ourOffer.useExistingDomains"
                       checked={useExistingDomains}
-                      onCheckedChange={handleExistingDomainsChange}
+                        onCheckedChange={checked => {
+    setValue('ourOffer.useExistingDomains', checked);
+    // you could even zero it out here instead of in useEffect:
+    setValue('ourOffer.costForDomains', checked ? 0 : watch('ourOffer.costForDomains'));
+  }}
                     />
                     <Label htmlFor="ourOffer.useExistingDomains" className="text-sm font-medium text-gray-700">Bring your existing domains</Label>
                   </div>
@@ -329,7 +338,7 @@ export default function InboxCalculator() {
                       <div className="bg-white/20 backdrop-blur-sm rounded-2xl p-4 sm:p-6 inline-block">
                         <div className="text-white/80 text-base sm:text-lg mb-2">Annual Savings</div>
                         <div className="text-3xl sm:text-4xl font-bold text-white">
-                          {formatCurrency(results.annualSavings)}
+                          {formatCurrency(results.totalSavings*12)}
                         </div>
                       </div>
                     </div>
@@ -365,68 +374,108 @@ export default function InboxCalculator() {
                 </Card>
               </div>
 
-              {/* Detailed Breakdown */}
+              {/* Before and After Comparison */}
               <Card className="border-2 border-green-200 shadow-lg">
                 <CardHeader className="bg-gradient-to-r from-green-50 to-emerald-50 border-b border-green-200">
                   <CardTitle className="flex items-center gap-2 text-green-800">
                     <BarChart3 className="h-5 w-5 sm:h-6 sm:w-6" />
-                    Detailed Savings Breakdown
+                    Before & After Comparison
                   </CardTitle>
                 </CardHeader>
-                <CardContent className="space-y-4 pt-6">
-                  <div className="flex flex-col sm:flex-row sm:justify-between sm:items-center p-4 bg-green-50 rounded-xl border border-green-200 gap-2">
-                    <div>
-                      <span className="text-gray-700 font-medium text-sm sm:text-base">Email Sequencer Savings</span>
-                      <p className="text-xs sm:text-sm text-gray-500">Reduced sequencer costs</p>
+                <CardContent className="space-y-6 pt-6">
+                  <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+                    {/* Before */}
+                    <div className="space-y-4">
+                      <div className="text-center">
+                        <h3 className="text-lg font-semibold text-red-700 mb-2">Current Costs</h3>
+                        <div className="text-3xl font-bold text-red-600">
+                          {formatCurrency(results.currentTotalWithDomains - results.currentDomainCost)}
+                        </div>
+                        <p className="text-sm text-gray-600">per month</p>
+                      </div>
+                      
+                      <div className="space-y-3">
+                        <div className="flex justify-between items-center p-3 bg-red-50 rounded-lg border border-red-200">
+                          <span className="text-sm font-medium text-gray-700"> Email Sequencer</span>
+                          <span className="font-semibold text-red-600">{formatCurrency(watch('currentCosts.emailSequencerCost'))}</span>
+                        </div>
+                           <div className="flex justify-between items-center p-3 bg-red-50 rounded-lg border border-red-200">
+                          <span className="text-sm font-medium text-gray-700"> Inbox Costs</span>
+                          <span className="font-semibold text-red-600">{formatCurrency(watch('currentCosts.totalMonthlyCost'))}</span>
+                        </div>
+                         <div className="flex justify-center items-center">
+                          <span className="text-4xl font-extrabold text-gray-700">+</span>
+                          {/* <span className="font-semibold text-green-600">{formatCurrency(results.domainsNeeded * watch('ourOffer.costPerDomain'))}</span> */}
+                        </div>
+                        <div className="flex justify-between items-center p-3 bg-red-50 rounded-lg border border-red-200">
+                          <span className="text-sm font-medium text-gray-700"> Domain Costs</span>
+                          <span className="font-semibold text-red-600">{formatCurrency(watch('currentCosts.numberOfDomains') * watch('currentCosts.domainCost'))}</span>
+                        </div>
+                        {/* <div className="flex justify-between items-center p-3 bg-red-50 rounded-lg border border-red-200">
+                          <span className="text-sm font-medium text-gray-700">Other Costs</span>
+                          <span className="font-semibold text-red-600">{formatCurrency(watch('currentCosts.totalMonthlyCost') - watch('currentCosts.emailSequencerCost') - (watch('currentCosts.numberOfDomains') * watch('currentCosts.domainCost')))}</span>
+                        </div> */}
+                      </div>
                     </div>
-                    <div className="text-right">
-                      <span className="text-xl sm:text-2xl font-bold text-green-600 block">
-                        {formatCurrency(results.sequencerSavings)}
-                      </span>
-                      <span className="text-xs sm:text-sm text-green-600">per month</span>
+
+                    {/* After */}
+                    <div className="space-y-4">
+                      <div className="text-center">
+                        <h3 className="text-lg font-semibold text-green-700 mb-2">Our Offer</h3>
+                        <div className="text-3xl font-bold text-green-600">
+                          {formatCurrency(results.ourTotalCost)}
+                        </div>
+                        <p className="text-sm text-gray-600">per month</p>
+                      </div>
+                      
+                      <div className="space-y-3">
+                        <div className="flex justify-between items-center p-3 bg-green-50 rounded-lg border border-green-200">
+                          <span className="text-sm font-medium text-gray-700">Our Email Sequencer</span>
+                          <span className="font-semibold text-green-600">{formatCurrency(watch('ourOffer.emailSequencerCost'))}</span>
+                        </div>
+                             <div className="flex justify-between items-center p-3 bg-green-50 rounded-lg border border-green-200">
+                          <span className="text-sm font-medium text-gray-700">Our Inbox Costs</span>
+                          <span className="font-semibold text-green-600">{formatCurrency(results.domainsNeeded * watch('ourOffer.costPerDomain'))}</span>
+                        </div>
+                             <div className="flex justify-center items-center">
+                          <span className="text-4xl font-extrabold text-gray-700">+</span>
+                          {/* <span className="font-semibold text-green-600">{formatCurrency(results.domainsNeeded * watch('ourOffer.costPerDomain'))}</span> */}
+                        </div>
+                        <div className="flex justify-between items-center p-3 bg-green-50 rounded-lg border border-green-200">
+                          <span className="text-sm font-medium text-gray-700">Your Domain Costs</span>
+                          <span className="font-semibold text-green-600">{formatCurrency(watch('ourOffer.costForDomains')*(watch('ourOffer.desiredDailyVolume')/500))}</span>
+                        </div>
+                        {/* {!useExistingDomains && (
+                          <div className="flex justify-between items-center p-3 bg-green-50 rounded-lg border border-green-200">
+                            <span className="text-sm font-medium text-gray-700">Domain Purchase</span>
+                            <span className="font-semibold text-green-600">{formatCurrency(results.domainsNeeded * watch('ourOffer.costForDomains'))}</span>
+                          </div>
+                        )} */}
+                      </div>
                     </div>
                   </div>
-                  <div className="flex flex-col sm:flex-row sm:justify-between sm:items-center p-4 bg-blue-50 rounded-xl border border-blue-200 gap-2">
-                    <div>
-                      <span className="text-gray-700 font-medium text-sm sm:text-base">Email Inbox Savings</span>
-                      <p className="text-xs sm:text-sm text-gray-500">Infrastructure cost reduction</p>
-                    </div>
-                    <div className="text-right">
-                      <span className="text-xl sm:text-2xl font-bold text-blue-600 block">
-                        {formatCurrency(results.emailInboxSavings)}
-                      </span>
-                      <span className="text-xs sm:text-sm text-blue-600">{formatPercentage(results.emailInboxSavingsPercentage)} savings</span>
-                    </div>
-                  </div>
-                  <div className="flex flex-col sm:flex-row sm:justify-between sm:items-center p-4 bg-purple-50 rounded-xl border border-purple-200 gap-2">
-                    <div>
-                      <span className="text-gray-700 font-medium text-sm sm:text-base">Domain Savings</span>
-                      <p className="text-xs sm:text-sm text-gray-500">Optimized domain usage</p>
-                    </div>
-                    <div className="text-right">
-                      <span className="text-xl sm:text-2xl font-bold text-purple-600 block">
-                        {formatCurrency(results.domainSavings)}
-                      </span>
-                      <span className="text-xs sm:text-sm text-purple-600">per month</span>
-                    </div>
-                  </div>
-                  <Separator className="my-4" />
-                  <div className="flex flex-col sm:flex-row sm:justify-between sm:items-center p-4 sm:p-6 bg-gradient-to-r from-green-100 to-emerald-100 rounded-xl border-2 border-green-300 gap-2">
-                    <div>
-                      <span className="text-lg sm:text-xl font-bold text-green-800">Total Monthly Savings</span>
-                      <p className="text-xs sm:text-sm text-green-700">Your guaranteed savings</p>
-                    </div>
-                    <div className="text-right">
-                      <span className="text-2xl sm:text-3xl font-black text-green-700 block">
-                        {formatCurrency(results.totalSavings)}
-                      </span>
-                      <span className="text-base sm:text-lg font-semibold text-green-600">{formatPercentage(results.totalSavingsPercentage)}</span>
+
+                  <Separator className="my-6" />
+                  
+                  {/* Savings Summary */}
+                  <div className="bg-gradient-to-r from-red-50 via-yellow-50 to-green-50 rounded-xl p-6 border-2 border-gray-200">
+                    <div className="text-center flex flex-col justify-center items-center">
+                      <div className="text-lg font-semibold text-gray-800 mb-2">Ready to start saving           {formatCurrency(results.totalSavings)} per month?</div>
+                      {/* <div className="text-4xl font-black text-green-700 mb-2">
+              
+                      </div> */}
+                      <div className="text-xl font-semibold text-green-600 mb-4">
+                      
+                      </div>
+                
+                <PulsatingButton className='bg-emerald-500' pulseColor='' >
+                   Start Saving
+
+                </PulsatingButton>
                     </div>
                   </div>
                 </CardContent>
               </Card>
-
-          
 
               {/* Call to Action */}
               {/* <Card className="bg-gradient-to-br from-blue-600 via-blue-700 to-indigo-800 border-0 shadow-2xl overflow-hidden">

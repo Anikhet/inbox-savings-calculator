@@ -44,6 +44,8 @@ export interface CalculationResults {
   
   // Additional metrics
   domainsNeeded: number;
+
+  yourDomainCosts:number
 }
 
 export interface CalculatorFormData {
