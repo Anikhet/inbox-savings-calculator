@@ -162,22 +162,7 @@ export default function InboxCalculator() {
                       </p>
                     )}
                   </div>
-                  <div>
-                    <Label htmlFor="currentCosts.domainCost" className="text-sm font-medium text-gray-700">Cost per domain?</Label>
-                    <Input
-                      id="currentCosts.domainCost"
-                      type="number"
-                      {...register('currentCosts.domainCost', { valueAsNumber: true })}
-                      placeholder="11.99"
-                      className="mt-1 border-gray-300 focus:border-blue-500 focus:ring-blue-500"
-                    />
-                    {errors.currentCosts?.domainCost && (
-                      <p className="text-red-600 text-sm mt-1">
-                        {errors.currentCosts.domainCost.message}
-                      </p>
-                    )}
-                  </div>
-                  <div>
+                        <div>
                     <Label htmlFor="currentCosts.totalMonthlyCost" className="text-sm font-medium text-gray-700">Current cost of inboxes per month?</Label>
                     <Input
                       id="currentCosts.totalMonthlyCost"
@@ -193,6 +178,22 @@ export default function InboxCalculator() {
                       </p>
                     )}
                   </div>
+                  <div>
+                    <Label htmlFor="currentCosts.domainCost" className="text-sm font-medium text-gray-700">Cost per domain?</Label>
+                    <Input
+                      id="currentCosts.domainCost"
+                      type="number"
+                      {...register('currentCosts.domainCost', { valueAsNumber: true })}
+                      placeholder="11.99"
+                      className="mt-1 border-gray-300 focus:border-blue-500 focus:ring-blue-500"
+                    />
+                    {errors.currentCosts?.domainCost && (
+                      <p className="text-red-600 text-sm mt-1">
+                        {errors.currentCosts.domainCost.message}
+                      </p>
+                    )}
+                  </div>
+            
                 </CardContent>
               </Card>
 
