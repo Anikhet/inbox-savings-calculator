@@ -3,7 +3,8 @@ export interface CurrentCosts {
   emailSequencerName: string;
   dailyEmailVolume: number;
   numberOfDomains: number;
-
+  inboxesPerDomain: number;
+  costPerInbox: number;
   totalMonthlyCost: number; // This is the inbox/infrastructure cost
   domainCost : number
 }
@@ -11,6 +12,9 @@ export interface CurrentCosts {
 export interface OurOffer {
   emailSequencerCost: number;
   desiredDailyVolume: number;
+  inboxesPerDomain: number;
+  sendsPerInbox: number;
+  costPerInbox: number;
   costPerDomain: number;
   useExistingDomains: boolean;
   costForDomains: number;
@@ -44,8 +48,8 @@ export interface CalculationResults {
   
   // Additional metrics
   domainsNeeded: number;
-
-  yourDomainCosts:number
+  inboxesNeeded: number;
+  yourDomainCosts: number;
 }
 
 export interface CalculatorFormData {
