@@ -61,7 +61,7 @@ export default function OutlookCalculator() {
       ourOffer: {
         emailSequencerCost: 70,
         desiredDailyVolume: 2000,
-        costPerDomain: 30,
+        costPerDomain: 60,
         useExistingDomains: false,
         costForDomains: 11.99,
       },
@@ -375,7 +375,7 @@ export default function OutlookCalculator() {
                       {...register("ourOffer.costPerDomain", {
                         valueAsNumber: true,
                       })}
-                      placeholder="30"
+                      placeholder="60"
                       className="mt-1 border-gray-300 focus:border-green-500 focus:ring-green-500"
                     />
                     {errors.ourOffer?.costPerDomain && (
